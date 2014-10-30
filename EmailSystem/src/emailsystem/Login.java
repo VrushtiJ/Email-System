@@ -1,0 +1,63 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package emailsystem;
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Login extends JFrame {
+    JLabel choose;
+    JButton mail, chat, signout; 
+    Login()
+    {
+        setTitle("Applications");
+        setVisible(true);
+        setLayout(null);
+        setSize(500,600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        choose=new JLabel("Enjoy chatting and mailing...!! :)");
+        choose.setForeground(Color.blue);
+        choose.setFont(new Font("Serif", Font.BOLD, 30));
+        mail=new JButton("Send an Email with attachments");
+        chat=new JButton("Do you wanna chat?");
+        signout=new JButton("Signout");
+        
+        choose.setBounds(50, 100, 500, 30);
+        mail.setBounds(120, 250, 300, 30);
+        chat.setBounds(120, 300, 250, 30);
+        signout.setBounds(350, 150, 80, 30);
+        
+        add(choose);
+        add(mail);
+        add(chat);
+        add(signout);
+        mail.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e)
+        {
+            Mail m=new Mail();
+            m.setVisible(true);
+        }
+        });
+        chat.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+         //      serverChatform s=new serverChatform();
+          //    s.setVisible(true);
+            }
+            });
+        signout.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                setVisible(false);
+                EmailSystem obj=new EmailSystem();
+                obj.setVisible(true);
+            }
+        });
+    }
+}
