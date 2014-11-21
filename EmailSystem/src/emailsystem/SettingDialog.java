@@ -117,11 +117,13 @@ public class SettingDialog extends JDialog {
     }
      
     private void buttonSaveActionPerformed(ActionEvent event) {
+        String SOCKET_FACTORY="javax.net.ssl.SSLSocketFactory";
         try {
             configUtil.saveProperties(textHost.getText(),
                     textPort.getText(),
                     textUser.getText(),
-                    textPass.getText());
+                    textPass.getText(),
+                    SOCKET_FACTORY);
             JOptionPane.showMessageDialog(SettingDialog.this,
                     "Properties were saved successfully!");    
             dispose();

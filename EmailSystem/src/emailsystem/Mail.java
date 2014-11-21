@@ -53,13 +53,13 @@ public class Mail extends JFrame {
     private GridBagConstraints constraints = new GridBagConstraints();
      
     public Mail() {
-        super("send a mail");
+        super("send an  Email");
          
         // set up layout
         setLayout(new GridBagLayout());
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(5, 5, 5, 5);
-     
+          
         setupMenu();
         setupForm();
          
@@ -135,7 +135,10 @@ public class Mail extends JFrame {
         String toAddress = fieldTo.getText();
         String subject = fieldSubject.getText();
         String message = textAreaMessage.getText();
-         
+        String Address[];
+            Address=toAddress.split(",");
+        
+        
         File[] attachFiles = null;
          
         if (!filePicker.getSelectedFilePath().equals("")) {
@@ -145,7 +148,7 @@ public class Mail extends JFrame {
          
         try {
             Properties smtpProperties = configUtil.loadProperties();
-            EmailUtility.sendEmail(smtpProperties, toAddress, subject, message, attachFiles);
+            EmailUtility.sendEmail(smtpProperties, Address, subject, message, attachFiles);
              System.out.println("message sent");
             JOptionPane.showMessageDialog(this,
                     "The e-mail has been sent successfully!");

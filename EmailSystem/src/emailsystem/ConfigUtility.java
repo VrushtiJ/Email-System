@@ -27,8 +27,8 @@ public class ConfigUtility {
         // sets default properties
         defaultProps.setProperty("mail.smtp.host", "smtp.gmail.com");
         defaultProps.setProperty("mail.smtp.port", "587");
-        defaultProps.setProperty("mail.user", "tom@gmail.com");
-        defaultProps.setProperty("mail.password", "secret");
+        defaultProps.setProperty("mail.user", "");
+        defaultProps.setProperty("mail.password", "");
         defaultProps.setProperty("mail.smtp.starttls.enable", "true");
         defaultProps.setProperty("mail.smtp.auth", "true");
          
@@ -44,7 +44,8 @@ public class ConfigUtility {
         return configProps;
     }
      
-    public void saveProperties(String host, String port, String user, String pass) throws IOException {
+    public void saveProperties(String host, String port, String user, String pass, String SOCKET_FACTORY) throws IOException {
+       String Debug="true";
         configProps.setProperty("mail.smtp.host", host);
         configProps.setProperty("mail.smtp.port", port);
         configProps.setProperty("mail.user", user);
@@ -52,6 +53,11 @@ public class ConfigUtility {
        // configProps.setProperty("mail.transport.protocol", "smtp");
         configProps.setProperty("mail.smtp.starttls.enable", "true");
         configProps.setProperty("mail.smtp.auth", "true");
+        configProps.setProperty("mail.smtp.debug", "true"); 
+
+configProps.setProperty("mail.smtp.socketFactory.port", port); 
+configProps.setProperty("mail.smtp.socketFactory.class", SOCKET_FACTORY); 
+configProps.setProperty("mail.smtp.socketFactory.fallback", "false"); 
          
         OutputStream outputStream = new FileOutputStream(configFile);
         configProps.store(outputStream, "host setttings");

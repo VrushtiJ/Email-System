@@ -24,13 +24,13 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
  
 public class EmailUtility {
-    public static void sendEmail(Properties smtpProperties, String toAddress,
+    public static void sendEmail(Properties smtpProperties, String[] toAddress,
             String subject, String message, File[] attachFiles)
             throws AddressException, MessagingException, IOException {
                 System.out.println("Message");
         final String userName = smtpProperties.getProperty("mail.user");
         final String password = smtpProperties.getProperty("mail.password");
-         
+        final String host=smtpProperties.getProperty("mail.smtp.host");
         // creates a new session with an authenticator
         Authenticator auth = new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
@@ -43,7 +43,11 @@ public class EmailUtility {
         Message msg = new MimeMessage(session);
  
         msg.setFrom(new InternetAddress(userName));
-        InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
+        InternetAddress[] toAddresses = new InternetAddress[toAddress.length];
+        for(int i=0;i<toAddress.length;i++)
+        {
+            toAddresses[i]=new InternetAddress(toAddress[i]);
+        }
         msg.setRecipients(Message.RecipientType.TO, toAddresses);
         msg.setSubject(subject);
         msg.setSentDate(new Date());
@@ -71,14 +75,20 @@ public class EmailUtility {
                 multipart.addBodyPart(attachPart);
             }
         }
+         session.setDebug(true);
     System.out.println(msg+" memmm");
      
         // sets the multi-part as e-mail's content
         msg.setContent(multipart);
  
         // sends the e-mail
-        Transport.send(msg);
-       // System.out.println("Sent message successfully....");
+        Transport transport = session.getTransport("smtp"); 
+transport.connect(host, userName, password); 
+transport.send(msg); 
+transport.close(); 
+//  Transport.send(msg);
+       
+        System.out.println("Sent message successfully....");
 }catch (MessagingException mex) {
 mex.printStackTrace();
 }

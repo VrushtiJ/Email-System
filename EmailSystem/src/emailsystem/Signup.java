@@ -54,7 +54,6 @@ public class Signup extends JFrame {
         con.setBounds(380, 300, 300, 30);
         submit.setBounds(400, 500, 100, 30);
         
-        System.out.println("vvv");
        add(signup);
        add(Full_name);
        add(full); 
@@ -79,7 +78,7 @@ public class Signup extends JFrame {
                    st.executeUpdate(str);
                    JOptionPane.showMessageDialog(null, user.getText()+"  " + full.getText() + "Added Successfully ....!!");
                    setVisible(false);
-                   Login obj=new Login();
+                   Login obj=new Login(user.getText());
                    
                    obj.setVisible(true);
                   }

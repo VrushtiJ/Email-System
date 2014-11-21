@@ -9,11 +9,17 @@ package emailsystem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Login extends JFrame {
     JLabel choose;
     JButton mail, chat, signout; 
-    Login()
+    
+    Login(String User)
     {
         setTitle("Applications");
         setVisible(true);
@@ -47,10 +53,33 @@ public class Login extends JFrame {
         chat.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e)
             {
-         //      serverChatform s=new serverChatform();
-          //    s.setVisible(true);
+        String name=null;
+                  try
+                {
+                    Class.forName("com.mysql.jdbc.Driver").newInstance();
+                    Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/emailchat?zeroDateTimeBehavior=convertToNull","root", "Joshi94");
+                    Statement Username=(Statement) c.createStatement();
+                    ResultSet U=Username.executeQuery("SELECT username FROM information");
+                    while(U.next())
+                    {
+                        if(User.equals(U.getString("username")))
+                        {
+                            name=User;
+                            break;
+                        }
+                    }
+             //       new ChatServerSync();
+                   ClientServer C=new ClientServer(name);
+                    
+               }
+                catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+                    ex.printStackTrace();
+            
+                  }
             }
-            });
+        });
+        
+            
         signout.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e)
             {
@@ -60,4 +89,7 @@ public class Login extends JFrame {
             }
         });
     }
+    
 }
+// InetAddress add=InetAddress.getLocalHost();
+//String ip=add.getHostAddress();
